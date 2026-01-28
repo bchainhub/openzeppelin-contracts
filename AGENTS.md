@@ -38,7 +38,7 @@ This project is based on the Ylem compiler rather than Solidity. It may still us
 
 - Pragmas should always be `pragma solidity ^1.1.2`.
 - Addresses are 22 bytes.
-- `keccak256` is implemented as `sha256` under the hood (exact parameters to be defined later).
+- `keccak256` is implemented as SHA3-256 under the hood.
 
 When porting tests from `openzeppelin_tests`, preserve the same folder structure under `test/` (create folders as needed).
 

@@ -10,19 +10,19 @@ contract EDDSAHarness {
         return EDDSA.recover(hash, signature);
     }
 
-    function toCoreSignedMessageHash(bytes32 hash) external view returns (bytes32) {
+    function toCoreSignedMessageHash(bytes32 hash) external pure returns (bytes32) {
         return EDDSA.toCoreSignedMessageHash(hash);
     }
 
-    function toCoreSignedMessageHashBytes(bytes memory data) external view returns (bytes32) {
+    function toCoreSignedMessageHashBytes(bytes memory data) external pure returns (bytes32) {
         return EDDSA.toCoreSignedMessageHash(data);
     }
 
-    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) external view returns (bytes32) {
+    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) external pure returns (bytes32) {
         return EDDSA.toTypedDataHash(domainSeparator, structHash);
     }
 
-    function toDataWithIntendedValidatorHash(address validator, bytes memory data) external view returns (bytes32) {
+    function toDataWithIntendedValidatorHash(address validator, bytes memory data) external pure returns (bytes32) {
         return EDDSA.toDataWithIntendedValidatorHash(validator, data);
     }
 }
@@ -59,7 +59,7 @@ contract EDDSATest is Test {
     }
 
     function testRecoverWithDifferentMessage() public {
-        (address signer, string memory key) = makeAddrAndKey("signer");
+        (, string memory key) = makeAddrAndKey("signer");
         bytes32 digest = _eddsa.toCoreSignedMessageHash(TEST_MESSAGE);
         bytes memory sig = vm.sign(key, digest);
 
