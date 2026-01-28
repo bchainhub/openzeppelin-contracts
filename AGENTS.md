@@ -29,9 +29,14 @@ A skill is a set of local instructions to follow that is stored in a `SKILL.md` 
 
 This repo ports OpenZeppelin to a custom blockchain. It uses the custom framework `spart` (a clone of Foundry/Forge). Build with `spark build`, and run tests with `spark test`.
 
+OpenZeppelin source and tests directories must remain unchanged:
+- `openzeppelin_contracts` and `openzeppelin_tests` are read-only references.
+- All ported logic lives under `src/` and all ported tests live under `test/`.
+- Files must mirror the OpenZeppelin folder structure under these destinations.
+
 This project is based on the Ylem compiler rather than Solidity. It may still use legacy names like `pragma solidity` or `keccak256`, but under the hood the compiler differs:
 
-- The basic pragma is `pragma solidity 1.1.0`.
+- Pragmas should always be `pragma solidity ^1.1.2`.
 - Addresses are 22 bytes.
 - `keccak256` is implemented as `sha256` under the hood (exact parameters to be defined later).
 
