@@ -42,6 +42,9 @@ This project is based on the Ylem compiler rather than Solidity. It may still us
 
 When porting tests from `openzeppelin_tests`, preserve the same folder structure under `test/` (create folders as needed).
 
+OpenZeppelin porting notes:
+- The OpenZeppelin `ECDSA` library is implemented as `EDDSA` in this codebase.
+
 Cryptography differences vs Ethereum:
 - `ecrecover` takes two arguments: `ecrecover(bytes32 hash, bytes signature)`; signature parsing/verification happens inside the chain.
 - Failed recovery hard reverts (burns 63/64 gas), instead of returning `address(0)` or a random address.
