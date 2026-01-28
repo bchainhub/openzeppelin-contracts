@@ -42,8 +42,13 @@ This project is based on the Ylem compiler rather than Solidity. It may still us
 
 When porting tests from `openzeppelin_tests`, preserve the same folder structure under `test/` (create folders as needed).
 
-OpenZeppelin porting notes:
+- OpenZeppelin porting notes:
 - The OpenZeppelin `ECDSA` library is implemented as `EDDSA` in this codebase.
+- Core ERC20 tokens are called `CRC20` and should use `CRC20` in file names, contract names, and revert reasons.
+- Zero address policy:
+  - There are two zero addresses: the real zero (`address(0)`) and the checksummed zero returned by `Checksum.zeroAddress()`.
+  - In events like `Minted` and `Burned` where no real transfer appears, emit the real zero (`address(0)`).
+  - Any non-zero address validation must reject both `address(0)` and `Checksum.zeroAddress()`.
 
 Cryptography differences vs Ethereum:
 - `ecrecover` takes two arguments: `ecrecover(bytes32 hash, bytes signature)`; signature parsing/verification happens inside the chain.
