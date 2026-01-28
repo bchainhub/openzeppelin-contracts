@@ -38,13 +38,44 @@ library EDDSA {
      * this is by receiving a hash of the original message (which may otherwise
      * be too long), and then calling {toCoreSignedMessageHash} on it.
      */
-    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError) {
+    function tryRecover(bytes32 hash, bytes memory signature) internal view returns (address, RecoverError) {
         if (signature.length != 171) {
             return (address(0), RecoverError.InvalidSignatureLength);
         }
 
-        address signer = ecrecover(hash, signature);
-        if (signer == address(0)) {
+        // address signer = ecrecover(hash, signature);
+        address signer;
+        bool ok;
+        assembly {
+            let ptr := mload(0x40)
+
+            mstore(ptr, hash)
+            mstore(add(ptr, 0x20), 0x40)
+            mstore(add(ptr, 0x40), 171)
+
+            let src := add(signature, 0x20)
+            let dst := add(ptr, 0x60)
+
+            mstore(dst, mload(src))
+            mstore(add(dst, 0x20), mload(add(src, 0x20)))
+            mstore(add(dst, 0x40), mload(add(src, 0x40)))
+            mstore(add(dst, 0x60), mload(add(src, 0x60)))
+            mstore(add(dst, 0x80), mload(add(src, 0x80)))
+            mstore(add(dst, 0xA0), mload(add(src, 0xA0)))
+
+            let success := staticcall(5000, 0x01, ptr, 0x120, ptr, 0x20)
+
+            if success {
+                let word := mload(ptr)
+                let mask := sub(shl(176, 1), 1)
+                signer := and(word, mask)
+
+                if signer { ok := 1 }
+            }
+
+            mstore(0x40, add(ptr, 0x140))
+        }
+        if (!ok) {
             return (address(0), RecoverError.InvalidSignature);
         }
 
@@ -55,7 +86,7 @@ library EDDSA {
      * @dev Returns the address that signed a hashed message (`hash`) with
      * `signature`. This address can then be used for verification purposes.
      */
-    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {
+    function recover(bytes32 hash, bytes memory signature) internal view returns (address) {
         (address recovered, RecoverError error) = tryRecover(hash, signature);
         _throwError(error);
         return recovered;
@@ -67,13 +98,10 @@ library EDDSA {
      * `core_sign` JSON-RPC method as part of EIP-191 style signing.
      */
     function toCoreSignedMessageHash(bytes32 hash) internal pure returns (bytes32 message) {
-        // 32 is the length in bytes of hash,
-        // enforced by the type signature above
-        /// @solidity memory-safe-assembly
         assembly {
             mstore(0x00, "\x19Core Signed Message:\n32")
-            mstore(0x1c, hash)
-            message := keccak256(0x00, 0x3c)
+            mstore(0x18, hash)
+            message := keccak256(0x00, 0x38)
         }
     }
 

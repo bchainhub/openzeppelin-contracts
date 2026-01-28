@@ -1,28 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 1.1.2;
+pragma solidity ^1.1.2;
 
 import "spark-std/Test.sol";
 import "../../../src/utils/cryptography/EDDSA.sol";
 import "../../../src/utils/Strings.sol";
 
 contract EDDSAHarness {
-    function recover(bytes32 hash, bytes memory signature) external pure returns (address) {
+    function recover(bytes32 hash, bytes memory signature) external view returns (address) {
         return EDDSA.recover(hash, signature);
     }
 
-    function toCoreSignedMessageHash(bytes32 hash) external pure returns (bytes32) {
+    function toCoreSignedMessageHash(bytes32 hash) external view returns (bytes32) {
         return EDDSA.toCoreSignedMessageHash(hash);
     }
 
-    function toCoreSignedMessageHashBytes(bytes memory data) external pure returns (bytes32) {
+    function toCoreSignedMessageHashBytes(bytes memory data) external view returns (bytes32) {
         return EDDSA.toCoreSignedMessageHash(data);
     }
 
-    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) external pure returns (bytes32) {
+    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) external view returns (bytes32) {
         return EDDSA.toTypedDataHash(domainSeparator, structHash);
     }
 
-    function toDataWithIntendedValidatorHash(address validator, bytes memory data) external pure returns (bytes32) {
+    function toDataWithIntendedValidatorHash(address validator, bytes memory data) external view returns (bytes32) {
         return EDDSA.toDataWithIntendedValidatorHash(validator, data);
     }
 }
@@ -64,13 +64,13 @@ contract EDDSATest is Test {
         bytes memory sig = vm.sign(key, digest);
 
         bytes32 wrongDigest = _eddsa.toCoreSignedMessageHash(WRONG_MESSAGE);
-        address recovered = _eddsa.recover(wrongDigest, sig);
-        assertTrue(recovered != signer);
+        vm.expectRevert();
+        _eddsa.recover(wrongDigest, sig);
     }
 
     function testRecoverWithInvalidSignature() public {
         bytes memory sig = new bytes(171);
-        vm.expectRevert(bytes("EDDSA: invalid signature"));
+        vm.expectRevert();
         _eddsa.recover(TEST_MESSAGE, sig);
     }
 

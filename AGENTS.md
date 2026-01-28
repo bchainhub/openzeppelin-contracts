@@ -44,7 +44,7 @@ When porting tests from `openzeppelin_tests`, preserve the same folder structure
 
 Cryptography differences vs Ethereum:
 - `ecrecover` takes two arguments: `ecrecover(bytes32 hash, bytes signature)`; signature parsing/verification happens inside the chain.
-- Failed recovery returns `address(0)` and should be treated as invalid.
+- Failed recovery hard reverts (burns 63/64 gas), instead of returning `address(0)` or a random address.
 - Signature length is fixed to 171 bytes; reject any other length (e.g., `InvalidSignatureLength`).
 - No exposed `(v, r, s)` tuple at the Solidity level; signatures are a single blob.
 - Signed-message prefix is `"\x19Core Signed Message:\n32"` (not Ethereum’s prefix).
