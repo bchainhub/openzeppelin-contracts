@@ -39,6 +39,7 @@ This project is based on the Ylem compiler rather than Solidity. It may still us
 - Pragmas should always be `pragma solidity ^1.1.2`.
 - Addresses are 22 bytes.
 - `keccak256` is implemented as SHA3-256 under the hood.
+- As a consequence, all Solidity function selectors (bytes4 of keccak256 of the signature) differ from Ethereum; any hardcoded selectors must be recomputed for Core.
 
 When porting tests from `openzeppelin_tests`, preserve the same folder structure under `test/` (create folders as needed).
 
@@ -58,3 +59,13 @@ Cryptography differences vs Ethereum:
 - Signed-message prefix is `"\x19Core Signed Message:\n32"` (not Ethereum’s prefix).
 - Typed-data hashing keeps EIP-712 construction: `keccak256("\x19\x01" || domainSeparator || structHash)`.
 - Tooling must produce 171-byte signatures, use the Core prefix, and verify via two-arg `ecrecover`.
+
+ERC1967 slot constants (keccak256 = SHA3-256, minus 1):
+- implementation: `0x169aa7877a62aec264f92a4c78812101abc42f65cbb20781a5cb4084c2d639d7`
+- admin: `0x5846d050da0e75d43b6055ae3cd6c2c65e1941ccb45afff84b891ff0c7a8e50e`
+- beacon: `0x79d0e26f0ed6a26bf96d37944c615e11aedbfafe56e064339e13dad9525cda31`
+- rollback: `0x9918ff29762f88fdc924c0a0ba5589b288a6baef366b4981f9a6f4309baada55`
+
+Transparent proxy selector differences (keccak256 = SHA3-256):
+- `admin()` selector: `0xeb8325fb` (Ethereum keccak selector is different)
+- `implementation()` selector: `0xf5d97006` (Ethereum keccak selector is different)
