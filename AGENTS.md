@@ -69,3 +69,4 @@ ERC1967 slot constants (keccak256 = SHA3-256, minus 1):
 Transparent proxy selector differences (keccak256 = SHA3-256):
 - `admin()` selector: `0xeb8325fb` (Ethereum keccak selector is different)
 - `implementation()` selector: `0xf5d97006` (Ethereum keccak selector is different)
+- ERC1271 `isValidSignature(bytes32,bytes)` selector: `0x95f9a59b` (Ethereum keccak selector is different)
