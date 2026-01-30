@@ -46,6 +46,8 @@ When porting tests from `openzeppelin_tests`, preserve the same folder structure
 - OpenZeppelin porting notes:
 - The OpenZeppelin `ECDSA` library is implemented as `EDDSA` in this codebase.
 - Core ERC20 tokens are called `CRC20` and should use `CRC20` in file names, contract names, and revert reasons.
+- Core ERC721 tokens are called `CRC721` and should use `CRC721` in file names, contract names, and revert reasons.
+- Core ERC1155 tokens are called `CRC1155` and should use `CRC1155` in file names, contract names, and revert reasons.
 - Zero address policy:
   - There are two zero addresses: the real zero (`address(0)`) and the checksummed zero returned by `Checksum.zeroAddress()`.
   - In events like `Minted` and `Burned` where no real transfer appears, emit the real zero (`address(0)`).
@@ -70,3 +72,4 @@ Transparent proxy selector differences (keccak256 = SHA3-256):
 - `admin()` selector: `0xeb8325fb` (Ethereum keccak selector is different)
 - `implementation()` selector: `0xf5d97006` (Ethereum keccak selector is different)
 - ERC1271 `isValidSignature(bytes32,bytes)` selector: `0x95f9a59b` (Ethereum keccak selector is different)
+- ERC165 `supportsInterface(bytes4)` selector: `0x80ada41b` (Ethereum keccak selector is different)
