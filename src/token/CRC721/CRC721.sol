@@ -41,10 +41,8 @@ contract CRC721 is Context, ERC165, ICRC721, ICRC721Metadata {
      * @dev See {IERC165-supportsInterface}.
      */
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC165, IERC165) returns (bool) {
-        return
-            interfaceId == type(ICRC721).interfaceId ||
-            interfaceId == type(ICRC721Metadata).interfaceId ||
-            super.supportsInterface(interfaceId);
+        return interfaceId == type(ICRC721).interfaceId || interfaceId == type(ICRC721Metadata).interfaceId
+            || super.supportsInterface(interfaceId);
     }
 
     /**
@@ -198,8 +196,7 @@ contract CRC721 is Context, ERC165, ICRC721, ICRC721Metadata {
     function _safeMint(address to, uint256 tokenId, bytes memory data) internal virtual {
         _mint(to, tokenId);
         require(
-            _checkOnERC721Received(address(0), to, tokenId, data),
-            "CRC721: transfer to non CRC721Receiver implementer"
+            _checkOnERC721Received(address(0), to, tokenId, data), "CRC721: transfer to non CRC721Receiver implementer"
         );
     }
 
@@ -298,12 +295,10 @@ contract CRC721 is Context, ERC165, ICRC721, ICRC721Metadata {
     /**
      * @dev Internal function to invoke {ICRC721Receiver-onERC721Received} on a target address.
      */
-    function _checkOnERC721Received(
-        address from,
-        address to,
-        uint256 tokenId,
-        bytes memory data
-    ) private returns (bool) {
+    function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory data)
+        private
+        returns (bool)
+    {
         if (to.isContract()) {
             try ICRC721Receiver(to).onERC721Received(_msgSender(), from, tokenId, data) returns (bytes4 retval) {
                 return retval == ICRC721Receiver.onERC721Received.selector;

@@ -39,7 +39,11 @@ contract CRC721ReceiverMock is ICRC721Receiver {
         _revertWithoutReason = revertWithoutReason;
     }
 
-    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external override returns (bytes4) {
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
+        external
+        override
+        returns (bytes4)
+    {
         if (_revertWithReason) {
             revert("CRC721ReceiverMock: reverting");
         }
@@ -55,6 +59,7 @@ contract NonCRC721ReceiverMock {}
 
 contract CRC721Test is Test {
     event Received(address operator, address from, uint256 tokenId, bytes data);
+
     CRC721Mock private _token;
 
     address private _owner;

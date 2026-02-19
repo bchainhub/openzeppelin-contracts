@@ -75,7 +75,7 @@ contract MinimalForwarderTest is Test {
         MinimalForwarder.ForwardRequest memory req = _defaultRequest(_from, address(0), hex"");
         bytes memory signature = vm.sign(_fromKey, _digest(req));
 
-        (bool success, ) = _forwarder.execute(req, signature);
+        (bool success,) = _forwarder.execute(req, signature);
         assertTrue(success);
         assertEq(_forwarder.getNonce(_from), req.nonce + 1);
     }
@@ -91,11 +91,8 @@ contract MinimalForwarderTest is Test {
 
     function testExecuteBubbleOutOfGas() public {
         CallReceiverMock receiver = new CallReceiverMock();
-        MinimalForwarder.ForwardRequest memory req = _defaultRequest(
-            _from,
-            address(receiver),
-            abi.encodeWithSelector(receiver.mockFunctionOutOfGas.selector)
-        );
+        MinimalForwarder.ForwardRequest memory req =
+            _defaultRequest(_from, address(receiver), abi.encodeWithSelector(receiver.mockFunctionOutOfGas.selector));
         req.gas = 1_000_000;
         bytes memory signature = vm.sign(_fromKey, _digest(req));
 
@@ -103,11 +100,11 @@ contract MinimalForwarderTest is Test {
         _forwarder.execute{gas: 100_000}(req, signature);
     }
 
-    function _defaultRequest(
-        address from,
-        address to,
-        bytes memory data
-    ) private view returns (MinimalForwarder.ForwardRequest memory req) {
+    function _defaultRequest(address from, address to, bytes memory data)
+        private
+        view
+        returns (MinimalForwarder.ForwardRequest memory req)
+    {
         req = MinimalForwarder.ForwardRequest({
             from: from,
             to: to,
@@ -119,16 +116,15 @@ contract MinimalForwarderTest is Test {
     }
 
     function _domainSeparator() private view returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    _DOMAIN_TYPEHASH,
-                    keccak256(bytes("MinimalForwarder")),
-                    keccak256(bytes("0.0.1")),
-                    block.chainid,
-                    address(_forwarder)
-                )
-            );
+        return keccak256(
+            abi.encode(
+                _DOMAIN_TYPEHASH,
+                keccak256(bytes("MinimalForwarder")),
+                keccak256(bytes("0.0.1")),
+                block.chainid,
+                address(_forwarder)
+            )
+        );
     }
 
     function _digest(MinimalForwarder.ForwardRequest memory req) private view returns (bytes32) {

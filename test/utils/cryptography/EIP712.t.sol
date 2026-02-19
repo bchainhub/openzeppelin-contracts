@@ -124,12 +124,16 @@ contract EIP712Test is Test {
         eip712.verify(sig, signer, mailTo, contents);
     }
 
-    function _domainSeparator(
-        string memory name,
-        string memory version,
-        address verifyingContract
-    ) private view returns (bytes32) {
-        return keccak256(abi.encode(DOMAIN_TYPEHASH, keccak256(bytes(name)), keccak256(bytes(version)), block.chainid, verifyingContract));
+    function _domainSeparator(string memory name, string memory version, address verifyingContract)
+        private
+        view
+        returns (bytes32)
+    {
+        return keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH, keccak256(bytes(name)), keccak256(bytes(version)), block.chainid, verifyingContract
+            )
+        );
     }
 
     function _mailStructHash(address mailTo, string memory contents) private pure returns (bytes32) {

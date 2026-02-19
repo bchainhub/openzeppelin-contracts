@@ -184,14 +184,13 @@ contract AccessControlTest is Test {
     }
 
     function _missingRole(address account, bytes32 role) private pure returns (string memory) {
-        return
-            string(
-                abi.encodePacked(
-                    "AccessControl: account ",
-                    Strings.toHexString(account),
-                    " is missing role ",
-                    Strings.toHexString(uint256(role), 32)
-                )
-            );
+        return string(
+            abi.encodePacked(
+                "AccessControl: account ",
+                Strings.toHexString(account),
+                " is missing role ",
+                Strings.toHexString(uint256(role), 32)
+            )
+        );
     }
 }

@@ -9,7 +9,11 @@ contract ContextMock is Context {
         return _msgSender();
     }
 
-    function msgData(uint256 integerValue, string memory stringValue) public view returns (bytes memory, uint256, string memory) {
+    function msgData(uint256 integerValue, string memory stringValue)
+        public
+        view
+        returns (bytes memory, uint256, string memory)
+    {
         bytes memory data = _msgData();
         return (data, integerValue, stringValue);
     }
@@ -20,11 +24,11 @@ contract ContextMockCaller {
         return context.msgSender();
     }
 
-    function callData(
-        ContextMock context,
-        uint256 integerValue,
-        string memory stringValue
-    ) public view returns (bytes memory, uint256, string memory) {
+    function callData(ContextMock context, uint256 integerValue, string memory stringValue)
+        public
+        view
+        returns (bytes memory, uint256, string memory)
+    {
         return context.msgData(integerValue, stringValue);
     }
 }

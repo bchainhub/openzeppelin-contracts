@@ -12,11 +12,11 @@ contract SignatureCheckerHarness {
         return SignatureChecker.isValidSignatureNow(signer, hash, signature);
     }
 
-    function isValidERC1271SignatureNow(
-        address signer,
-        bytes32 hash,
-        bytes memory signature
-    ) external view returns (bool) {
+    function isValidERC1271SignatureNow(address signer, bytes32 hash, bytes memory signature)
+        external
+        view
+        returns (bool)
+    {
         return SignatureChecker.isValidERC1271SignatureNow(signer, hash, signature);
     }
 }

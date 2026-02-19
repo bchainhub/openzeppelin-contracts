@@ -40,11 +40,11 @@ contract ClonesFactory {
         return Clones.predictDeterministicAddress(implementation, salt);
     }
 
-    function predictDeterministicAddress(
-        address implementation,
-        bytes32 salt,
-        address deployer
-    ) external view returns (address) {
+    function predictDeterministicAddress(address implementation, bytes32 salt, address deployer)
+        external
+        view
+        returns (address)
+    {
         return Clones.predictDeterministicAddress(implementation, salt, deployer);
     }
 }
@@ -150,7 +150,11 @@ contract ClonesTest is Test {
         );
     }
 
-    function _computeCreate2Address(bytes32 salt, bytes memory bytecode, address deployer) private view returns (address) {
+    function _computeCreate2Address(bytes32 salt, bytes memory bytecode, address deployer)
+        private
+        view
+        returns (address)
+    {
         bytes32 bytecodeHash = keccak256(bytecode);
         bytes32 hash = keccak256(abi.encodePacked(bytes1(0xff), deployer, salt, bytecodeHash));
         return Checksum.toIcan(uint160(uint256(hash)));

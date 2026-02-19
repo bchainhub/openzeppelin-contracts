@@ -13,5 +13,7 @@ interface ICRC721Receiver {
      *
      * It must return its Solidity selector to confirm the token transfer.
      */
-    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data) external returns (bytes4);
+    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)
+        external
+        returns (bytes4);
 }

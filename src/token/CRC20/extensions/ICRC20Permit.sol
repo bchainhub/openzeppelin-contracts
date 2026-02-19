@@ -26,13 +26,7 @@ interface ICRC20Permit {
      * - `signature` must be a valid signature from `owner` over the EIP712-formatted arguments.
      * - the signature must use ``owner``'s current nonce (see {nonces}).
      */
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        bytes memory signature
-    ) external;
+    function permit(address owner, address spender, uint256 value, uint256 deadline, bytes memory signature) external;
 
     /**
      * @dev Returns the current nonce for `owner`. This value must be

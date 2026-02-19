@@ -185,16 +185,15 @@ contract ERC2771ContextTest is Test {
     }
 
     function _domainSeparator() private view returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    _DOMAIN_TYPEHASH,
-                    keccak256(bytes("MinimalForwarder")),
-                    keccak256(bytes("0.0.1")),
-                    block.chainid,
-                    address(_forwarder)
-                )
-            );
+        return keccak256(
+            abi.encode(
+                _DOMAIN_TYPEHASH,
+                keccak256(bytes("MinimalForwarder")),
+                keccak256(bytes("0.0.1")),
+                block.chainid,
+                address(_forwarder)
+            )
+        );
     }
 
     function _digest(MinimalForwarder.ForwardRequest memory req) private view returns (bytes32) {
