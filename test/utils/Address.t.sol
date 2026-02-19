@@ -20,24 +20,26 @@ contract AddressMock {
         return Address.functionCall(target, data);
     }
 
-    function functionCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external returns (bytes memory) {
+    function functionCall(address target, bytes memory data, string memory errorMessage)
+        external
+        returns (bytes memory)
+    {
         return Address.functionCall(target, data, errorMessage);
     }
 
-    function functionCallWithValue(address target, bytes memory data, uint256 value) external payable returns (bytes memory) {
+    function functionCallWithValue(address target, bytes memory data, uint256 value)
+        external
+        payable
+        returns (bytes memory)
+    {
         return Address.functionCallWithValue(target, data, value);
     }
 
-    function functionCallWithValue(
-        address target,
-        bytes memory data,
-        uint256 value,
-        string memory errorMessage
-    ) external payable returns (bytes memory) {
+    function functionCallWithValue(address target, bytes memory data, uint256 value, string memory errorMessage)
+        external
+        payable
+        returns (bytes memory)
+    {
         return Address.functionCallWithValue(target, data, value, errorMessage);
     }
 
@@ -45,11 +47,11 @@ contract AddressMock {
         return Address.functionStaticCall(target, data);
     }
 
-    function functionStaticCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external view returns (bytes memory) {
+    function functionStaticCall(address target, bytes memory data, string memory errorMessage)
+        external
+        view
+        returns (bytes memory)
+    {
         return Address.functionStaticCall(target, data, errorMessage);
     }
 
@@ -57,19 +59,18 @@ contract AddressMock {
         return Address.functionDelegateCall(target, data);
     }
 
-    function functionDelegateCall(
-        address target,
-        bytes memory data,
-        string memory errorMessage
-    ) external returns (bytes memory) {
+    function functionDelegateCall(address target, bytes memory data, string memory errorMessage)
+        external
+        returns (bytes memory)
+    {
         return Address.functionDelegateCall(target, data, errorMessage);
     }
 
-    function verifyCallResult(
-        bool success,
-        bytes memory returndata,
-        string memory errorMessage
-    ) external pure returns (bytes memory) {
+    function verifyCallResult(bool success, bytes memory returndata, string memory errorMessage)
+        external
+        pure
+        returns (bytes memory)
+    {
         return Address.verifyCallResult(success, returndata, errorMessage);
     }
 
@@ -132,7 +133,7 @@ contract CallReceiverMock {
     }
 
     function mockFunctionOutOfGas() public payable {
-        for (uint256 i = 0; ; ++i) {
+        for (uint256 i = 0;; ++i) {
             _array.push(i);
         }
     }

@@ -68,10 +68,7 @@ abstract contract Ownable is Context {
      * Can only be called by the current owner.
      */
     function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(
-            newOwner != address(0) && newOwner != Checksum.zeroAddress(),
-            "Ownable: new owner is the zero address"
-        );
+        require(newOwner != address(0) && newOwner != Checksum.zeroAddress(), "Ownable: new owner is the zero address");
         _transferOwnership(newOwner);
     }
 

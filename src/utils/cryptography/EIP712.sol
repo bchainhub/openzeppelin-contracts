@@ -62,7 +62,7 @@ abstract contract EIP712 is IERC5267 {
     constructor(string memory name, string memory version) {
         _name = name;
         _version = version;
-        
+
         bytes32 hashedName_ = keccak256(bytes(name));
         bytes32 hashedVersion_ = keccak256(bytes(version));
         _hashedName = hashedName_;
@@ -84,10 +84,7 @@ abstract contract EIP712 is IERC5267 {
         }
     }
 
-    function _buildDomainSeparator(
-        bytes32 hashedName_,
-        bytes32 hashedVersion_
-    ) private view returns (bytes32) {
+    function _buildDomainSeparator(bytes32 hashedName_, bytes32 hashedVersion_) private view returns (bytes32) {
         return keccak256(abi.encode(_TYPE_HASH, hashedName_, hashedVersion_, block.chainid, address(this)));
     }
 

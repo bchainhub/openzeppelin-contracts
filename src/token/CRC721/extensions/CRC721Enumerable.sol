@@ -49,12 +49,11 @@ abstract contract CRC721Enumerable is CRC721, ICRC721Enumerable {
     /**
      * @dev See {CRC721-_beforeTokenTransfer}.
      */
-    function _beforeTokenTransfer(
-        address from,
-        address to,
-        uint256 firstTokenId,
-        uint256 batchSize
-    ) internal virtual override {
+    function _beforeTokenTransfer(address from, address to, uint256 firstTokenId, uint256 batchSize)
+        internal
+        virtual
+        override
+    {
         super._beforeTokenTransfer(from, to, firstTokenId, batchSize);
 
         if (batchSize > 1) {

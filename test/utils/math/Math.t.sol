@@ -21,7 +21,11 @@ contract MathHarness {
         return Math.ceilDiv(a, b);
     }
 
-    function mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding) external pure returns (uint256) {
+    function mulDiv(uint256 x, uint256 y, uint256 denominator, Math.Rounding rounding)
+        external
+        pure
+        returns (uint256)
+    {
         return Math.mulDiv(x, y, denominator, rounding);
     }
 
@@ -121,10 +125,7 @@ contract MathTest is Test {
         assertEq(_math.sqrt(1000001, Math.Rounding.Down), 1000);
         assertEq(_math.sqrt(1002000, Math.Rounding.Down), 1000);
         assertEq(_math.sqrt(1002001, Math.Rounding.Down), 1001);
-        assertEq(
-            _math.sqrt(type(uint256).max, Math.Rounding.Down),
-            340282366920938463463374607431768211455
-        );
+        assertEq(_math.sqrt(type(uint256).max, Math.Rounding.Down), 340282366920938463463374607431768211455);
     }
 
     function testSqrtRoundsUp() public {
@@ -139,10 +140,7 @@ contract MathTest is Test {
         assertEq(_math.sqrt(1000001, Math.Rounding.Up), 1001);
         assertEq(_math.sqrt(1002000, Math.Rounding.Up), 1001);
         assertEq(_math.sqrt(1002001, Math.Rounding.Up), 1001);
-        assertEq(
-            _math.sqrt(type(uint256).max, Math.Rounding.Up),
-            340282366920938463463374607431768211456
-        );
+        assertEq(_math.sqrt(type(uint256).max, Math.Rounding.Up), 340282366920938463463374607431768211456);
     }
 
     function testLog2RoundsDown() public {
