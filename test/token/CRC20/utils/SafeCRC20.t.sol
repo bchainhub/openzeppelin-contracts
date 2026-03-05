@@ -134,13 +134,10 @@ contract CRC20PermitNoRevertMock is CRC20Permit {
         super.permit(owner, spender, value, deadline, signature);
     }
 
-    function permit(
-        address owner,
-        address spender,
-        uint256 value,
-        uint256 deadline,
-        bytes memory signature
-    ) public override {
+    function permit(address owner, address spender, uint256 value, uint256 deadline, bytes memory signature)
+        public
+        override
+    {
         try this.permitThatMayRevert(owner, spender, value, deadline, signature) {
             // do nothing
         } catch {
@@ -229,8 +226,7 @@ contract SafeCRC20Test is Test {
         address permitSpender = _spender;
 
         bytes memory sig = vm.sign(
-            ownerKey,
-            _permitDigest(address(token), owner, permitSpender, 42, token.nonces(owner), type(uint256).max)
+            ownerKey, _permitDigest(address(token), owner, permitSpender, 42, token.nonces(owner), type(uint256).max)
         );
 
         assertEq(token.nonces(owner), 0);
@@ -354,26 +350,21 @@ contract SafeCRC20Test is Test {
     }
 
     function _setAllowance(address token, address owner, address spender, uint256 value) private {
-        (bool ok, ) = token.call(abi.encodeWithSelector(CRC20Mock.setAllowance.selector, owner, spender, value));
+        (bool ok,) = token.call(abi.encodeWithSelector(CRC20Mock.setAllowance.selector, owner, spender, value));
         require(ok, "setAllowance failed");
     }
 
     function _mintForTest(address token, address to, uint256 value) private {
-        (bool ok, ) = token.call(abi.encodeWithSelector(CRC20Mock.mint.selector, to, value));
+        (bool ok,) = token.call(abi.encodeWithSelector(CRC20Mock.mint.selector, to, value));
         require(ok, "mint failed");
     }
 
     function _domainSeparator(address verifyingContract) private view returns (bytes32) {
-        return
-            keccak256(
-                abi.encode(
-                    DOMAIN_TYPEHASH,
-                    keccak256(bytes(_NAME)),
-                    keccak256(bytes(_VERSION)),
-                    block.chainid,
-                    verifyingContract
-                )
-            );
+        return keccak256(
+            abi.encode(
+                DOMAIN_TYPEHASH, keccak256(bytes(_NAME)), keccak256(bytes(_VERSION)), block.chainid, verifyingContract
+            )
+        );
     }
 
     function _permitDigest(
