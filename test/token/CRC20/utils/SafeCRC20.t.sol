@@ -152,8 +152,8 @@ contract SafeCRC20Test is Test {
     bytes32 private constant PERMIT_TYPEHASH =
         keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
 
-    string private constant _NAME = "ERC20Mock";
-    string private constant _SYMBOL = "ERC20Mock";
+    string private constant _NAME = "CRC20Mock";
+    string private constant _SYMBOL = "CRC20Mock";
     string private constant _VERSION = "1";
 
     SafeCRC20Mock private _safe;
